@@ -40,8 +40,8 @@ class Utility(private val channelName: String) {
         val durationStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
         val title = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE) ?: ""
         val author = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_AUTHOR) ?: ""
-        val widthStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
-        val heightStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
+        val widthStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH) ?: "0"
+        val heightStr = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT) ?: "0"
         val duration = java.lang.Long.parseLong(durationStr)
         var width = java.lang.Long.parseLong(widthStr)
         var height = java.lang.Long.parseLong(heightStr)
