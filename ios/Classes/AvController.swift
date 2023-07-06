@@ -31,6 +31,9 @@ class AvController: NSObject {
         }
         let size = track.naturalSize
         let txf = track.preferredTransform
+        if (size == nil || txf == nil) {
+            return 0
+        }
         if size.width == txf.tx && size.height == txf.ty {
             return 0
         } else if txf.tx == 0 && txf.ty == 0 {

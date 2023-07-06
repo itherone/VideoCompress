@@ -17,8 +17,18 @@ public class SwiftVideoCompressPlugin: NSObject, FlutterPlugin {
         let instance = SwiftVideoCompressPlugin(channel: channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
+
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        do {
+            try handleImpl(call, result)
+        }
+        catch let error as NSError {
+            print(error)
+            result(FlutterMethodNotImplemented)
+        }
+    }
+
+    private func handleImpl(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let args = call.arguments as? Dictionary<String, Any>
         switch call.method {
         case "getByteThumbnail":
@@ -108,10 +118,10 @@ public class SwiftVideoCompressPlugin: NSObject, FlutterPlugin {
         let duration = asset.duration.seconds * 1000
         let filesize = track.totalSampleDataLength
         
-        let size = track.naturalSize.applying(track.preferredTransform)
+        let size = try? track.naturalSize.applying(track.preferredTransform)
         
-        let width = abs(size.width)
-        let height = abs(size.height)
+        let width = (try? abs(size.width)) ?? 0
+        let height = (try? abs(size.height)) ?? 0
         
         let dictionary = [
             "path":Utility.excludeFileProtocol(path),
